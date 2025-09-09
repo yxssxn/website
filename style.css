@@ -1,158 +1,832 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600;700&display=swap');
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Roboto Mono', monospace;
-  font-weight: normal;
-  font-size: clamp(8px, 2vw, 20px);
+  font-family: 'IBM Plex Mono', 'Courier New', 'Monaco', monospace;
+  font-weight: 400;
+  font-size: clamp(12px, 2.5vw, 16px);
 }
 
 body {
+  min-height: 100vh;
+  background: #808080;
+  color: #800080;
+  overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 20px;
+  line-height: 1.4;
+  position: relative;
+  animation: screenFlicker 3s ease-in-out infinite alternate;
+}
+
+/* Screen flicker animation */
+@keyframes screenFlicker {
+  0%, 98%, 100% { 
+    opacity: 1;
+    filter: brightness(1);
+  }
+  99% { 
+    opacity: 0.98;
+    filter: brightness(1.02);
+  }
+}
+
+/* CRT Screen Effects */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
   height: 100vh;
-  background: #dddddd;
-  overflow: scroll;
-  transition: all 200ms ease;
+  background: 
+    repeating-linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.02) 0px,
+      rgba(0, 0, 0, 0.02) 1px,
+      transparent 1px,
+      transparent 2px
+    );
+  pointer-events: none;
+  z-index: 1000;
+  animation: scanlines 0.1s linear infinite;
+}
+
+@keyframes scanlines {
+  0% { transform: translateY(0px); }
+  100% { transform: translateY(2px); }
 }
 
 .night {
-  background-color: #272727;
-  color: #dddddd;
+  background: #0a0a0a !important;
+  color: #00ff00;
+  /* Green phosphor glow for night theme */
+  text-shadow: 0 0 5px rgba(0, 255, 0, 0.8);
 }
 
+
 .night a {
-  color: #dddddd;
+  color: #00ff00;
+  /* Add glow to all buttons/links in dark theme */
+  text-shadow: 0 0 8px rgba(0, 255, 0, 0.6);
 }
 
 h1 {
-  font-family: 'Roboto Mono', monospace;
+  font-family: 'IBM Plex Mono', 'Courier New', monospace;
   font-style: normal;
-  font-weight: normal;
-  line-height: inherit;
-  align-items: center;
-  text-align: center;
+  font-weight: 600;
+  font-size: clamp(8px, 2vw, 14px);
+  line-height: 1;
+  text-align: left;
   white-space: pre;
+  letter-spacing: 0;
+  margin: 0 auto 28px auto;
+  padding: 0;
+  color: #800080;
+  text-transform: uppercase;
+  display: block;
+  width: fit-content;
+  max-width: calc(100vw - 20px);
+  overflow-x: visible;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+
+.night h1 {
+  color: #00ff00;
+  /* Enhanced green glow for night theme */
+  text-shadow: 
+    0 0 10px rgba(0, 255, 0, 1),
+    0 0 20px rgba(0, 255, 0, 0.6),
+    0 0 30px rgba(0, 255, 0, 0.3);
+}
+
+#terminal-cursor {
+  color: inherit;
+  font-weight: normal;
+  position: absolute;
+  transform: translateX(0);
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+#loading-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #808080;
+  color: #800080;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  font-family: 'IBM Plex Mono', 'Courier New', monospace;
+  font-size: clamp(16px, 3vw, 24px);
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.night #loading-screen {
+  background: #0a0a0a !important;
+  color: #00ff00;
+}
+
+#loading-text {
+  text-align: center;
+  letter-spacing: 0px;
 }
 
 a {
-  color: #000000;
+  color: #800080;
   text-decoration: none;
-  border-bottom: none;
+  border: 2px solid transparent;
+  padding: 4px 8px;
+  transition: all 0.15s ease;
+  font-weight: 600;
+  text-transform: uppercase;
+  background: transparent;
+  outline: none;
+  position: relative;
+  top: 0px;
 }
 
-a:hover {
-  text-decoration: underline;
+a:focus {
+  border: 2px solid #800080;
+  background: #800080;
+  color: #808080;
+  box-sizing: border-box;
+}
+
+a:hover, a:active {
+  background: #800080;
+  color: #808080;
+  border: 2px solid #800080;
+}
+
+
+/* Nav menu specific styling - behave like about page text links */
+.nav__link a:hover:not(.a__active), .nav__link a:active:not(.a__active) {
+  background: #800080;
+  color: #808080;
+  border: 2px solid transparent;
+}
+
+.nav__link a:focus {
+  border: 2px solid #800080;
+  background: transparent;
+  color: #800080;
+  box-sizing: border-box;
+}
+
+/* Active nav items should always be filled */
+.nav__link a.a__active,
+.nav__link a.a__active:hover,
+.nav__link a.a__active:focus,
+.nav__link a.a__active:active {
+  background: #800080;
+  color: #808080;
+  border: 2px solid #800080;
+}
+
+.night a {
+  color: #00ff00;
+}
+
+.night a:focus {
+  border: 2px solid #00ff00;
+  background: #00ff00;
+  color: #000000;
+  box-sizing: border-box;
+}
+
+.night a:hover, .night a:active {
+  background: #00ff00;
+  color: #000000;
+  border: 2px solid #00ff00;
+  /* Add glow to button fill state - inside and outside border */
+  box-shadow: 
+    0 0 15px rgba(0, 255, 0, 0.8),
+    inset 0 0 15px rgba(0, 255, 0, 0.3);
+  text-shadow: none; /* Remove glow from black text */
+}
+
+
+/* Night theme nav menu specific styling - behave like about page text links */
+.night .nav__link a:hover:not(.a__active), .night .nav__link a:active:not(.a__active) {
+  background: #00ff00;
+  color: #000000;
+  border: 2px solid transparent;
+  /* Add glow to nav button fill state - inside and outside border */
+  box-shadow: 
+    0 0 15px rgba(0, 255, 0, 0.8),
+    inset 0 0 15px rgba(0, 255, 0, 0.3);
+  text-shadow: none; /* Remove glow from black text */
+}
+
+.night .nav__link a:focus {
+  border: 2px solid #00ff00;
+  background: transparent;
+  color: #00ff00;
+  box-sizing: border-box;
+}
+
+/* Active nav items should always be filled - night theme */
+.night .nav__link a.a__active,
+.night .nav__link a.a__active:hover,
+.night .nav__link a.a__active:focus,
+.night .nav__link a.a__active:active {
+  background: #00ff00;
+  color: #000000;
+  border: 2px solid #00ff00;
+  /* Add glow to active nav items - inside and outside border */
+  box-shadow: 
+    0 0 15px rgba(0, 255, 0, 0.8),
+    inset 0 0 15px rgba(0, 255, 0, 0.3);
+  text-shadow: none; /* Remove glow from black text */
+}
+
+/* Theme toggle button styling */
+.toggle-indicator {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  background: #808080;
+  border: 2px solid #800080;
+  text-align: center;
+  font-size: 8px;
+  box-sizing: border-box;
+  margin-right: 6px;
+  vertical-align: text-top;
+  transform: translateY(5px);
+  position: relative;
+  overflow: hidden;
+  color: transparent;
+}
+
+.toggle-indicator::before {
+  content: "●";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  line-height: 1;
+  top: 1px;
+  color: #800080;
+}
+
+.night .toggle-indicator {
+  background: #0a0a0a;
+  border: 2px solid #00ff00;
+}
+
+.night .toggle-indicator::before {
+  top: -2px;
+  color: #00ff00;
+}
+
+body:not(.night) .toggle-indicator {
+  color: #800080;
 }
 
 .a__active {
-  text-decoration: underline;
+  background: #800080;
+  color: #808080;
+  border: 2px solid #800080;
+}
+
+.night .a__active {
+  background: #00ff00;
+  color: #000000;
+  border: 2px solid #00ff00;
 }
 
 .container {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
+  width: 100%;
+  max-width: 750px;
+  display: block;
+  padding: 0;
+  margin: 0 auto;
+  opacity: 0;
+  transition: opacity 0.5s ease;
 }
 
 header {
   width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: block;
+  margin-bottom: 56px;
+  border-bottom: 2px dashed #800080;
+  padding-bottom: 28px;
 }
 
 nav {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  justify-content: center;
-  margin: 0 auto;
-  height: 100px;
+  display: block;
+  margin: 56px 0;
+  border: 2px dashed #800080;
+  background: transparent;
+  padding: 28px;
+  overflow: visible;
+  padding-bottom: 40px;
+}
+
+.night nav {
+  border: 2px dashed #00ff00;
+  /* Night theme nav glow - inside and outside */
+  box-shadow: 
+    0 0 15px rgba(0, 255, 0, 0.5),
+    inset 0 0 15px rgba(0, 255, 0, 0.3);
+}
+
+.night header {
+  border-bottom: 2px dashed #00ff00;
+  position: relative;
+}
+
+.night header::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: rgba(0, 255, 0, 0.1);
+  box-shadow: 
+    0 2px 15px rgba(0, 255, 0, 0.5),
+    0 -2px 15px rgba(0, 255, 0, 0.3);
+  pointer-events: none;
 }
 
 .nav__link--list {
   display: flex;
   list-style-type: none;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav__link--list .nav__link:last-child {
+  margin-left: auto;
 }
 
 .social__links a {
   text-decoration: none;
+  transition: none;
 }
 
-.social__links a:hover {
-  text-decoration: underline;
+.social__links a:hover, .social__links a:active {
+  background: #800080;
+  color: #808080;
+}
+
+.night .social__links a:hover, .night .social__links a:active {
+  background: #00ff00;
+  color: #000000;
 }
 
 .nav__link {
   list-style-type: none;
-  padding: 0 5rem;
+  font-weight: 600;
+  letter-spacing: 0px;
+}
+
+#about-section {
+  display: none;
+  border: 2px dashed #800080;
+  padding: 28px;
+  margin: 28px 0;
+  background: transparent;
 }
 
 #socials {
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto;
+  display: none;
+  border: 2px dashed #800080;
+  padding: 28px;
+  margin: 28px 0;
+  background: transparent;
 }
+
+#bookmarks {
+  display: none;
+  border: 2px dashed #800080;
+  padding: 28px;
+  margin: 28px 0;
+  background: transparent;
+}
+
+#shortcuts {
+  display: none;
+  border: 2px dashed #800080;
+  padding: 28px;
+  margin: 28px 0;
+  background: transparent;
+}
+
+.night #about-section,
+.night #socials,
+.night #bookmarks,
+.night #shortcuts {
+  border: 2px dashed #00ff00;
+  /* Night theme section glow - inside and outside */
+  box-shadow: 
+    0 0 15px rgba(0, 255, 0, 0.5),
+    inset 0 0 15px rgba(0, 255, 0, 0.3);
+}
+
+.about-text {
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+.about-link {
+  font-weight: 600;
+  text-decoration: none;
+  padding: 2px 4px !important; /* Smaller padding for inline text */
+  border: 1px solid transparent !important; /* Thinner border for inline text */
+  line-height: 1.2; /* Tighter line height */
+}
+
+.about-link strong {
+  font-weight: 700;
+}
+
+/* About link hover/focus states with smaller borders */
+.about-link:hover, .about-link:active {
+  border: 1px solid #800080 !important; /* Thinner border on hover */
+}
+
+.about-link:focus {
+  border: 1px solid #800080 !important; /* Thinner border on focus */
+}
+
+.night .about-link:hover, .night .about-link:active {
+  border: 1px solid #00ff00 !important; /* Thinner border on hover - night theme */
+}
+
+.night .about-link:focus {
+  border: 1px solid #00ff00 !important; /* Thinner border on focus - night theme */
+}
+
+.shortcuts-text {
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+/* ASCII Enhancement Styles */
+.ascii-divider {
+  font-family: 'IBM Plex Mono', 'Courier New', monospace;
+  color: #800080;
+  text-align: center;
+  margin: 14px 0;
+  font-size: 0.8em;
+  opacity: 0.7;
+  letter-spacing: -1px;
+}
+
+.night .ascii-divider {
+  color: #00ff00;
+}
+
+/* Navigation Indicators */
+.nav-indicator {
+  margin-right: 4px;
+  font-weight: 600;
+}
+
+
+
+/* Enhanced Loading Animation */
+#loading-text {
+  font-family: 'IBM Plex Mono', 'Courier New', monospace;
+  white-space: pre;
+}
+
+/* Hover Effects for Links */
+.table__links {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.table__links:hover::before {
+  content: ">> ";
+  position: absolute;
+  left: -20px;
+  color: inherit;
+  font-weight: 600;
+}
+
+.table__links:focus::before {
+  content: "* ";
+  position: absolute;
+  left: -15px;
+  color: inherit;
+  font-weight: 600;
+}
+
+/* Social Link Prefixes Enhancement */
+.table__links {
+  font-family: 'IBM Plex Mono', 'Courier New', monospace;
+}
+
+/* Blinking Cursor Animation */
+.blink {
+  animation: blink-terminal 1s infinite;
+}
+
+@keyframes blink-terminal {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+/* Email Icon Styling */
+.email-icon {
+  font-size: 1.8em;
+  margin-right: 8px;
+  transform: translateY(2px);
+  display: inline-block;
+  transition: all 0.15s ease;
+}
+
+/* Compensate email icon position when parent links are pressed */
+.footer a:hover .email-icon, 
+.footer a:active .email-icon,
+.table__links:hover .email-symbol,
+.table__links:active .email-symbol {
+  top: -1px !important;
+}
+
+/* Contact section email icon - same size but no bounding box increase */
+.table__links .email-symbol {
+  font-size: 1.8em;
+  margin-right: 8px;
+  transform: translateY(2px);
+  display: inline-block;
+  line-height: 0;
+  vertical-align: baseline;
+  position: relative;
+  top: 0;
+  overflow: visible;
+  transition: transform 0.15s ease;
+}
+
+/* Prevent the email symbol from affecting parent line height */
+.table__links:has(.email-symbol) {
+  line-height: 1.4;
+  overflow: hidden;
+}
+
+/* Focus styling */
+a:focus, button:focus {
+  outline: none;
+}
+
+/* Keyboard navigation - make focus state same as hover */
+a:focus {
+  background: #800080;
+  color: #808080;
+  border: 2px solid #800080;
+}
+
+.night a:focus {
+  background: #00ff00;
+  color: #000000;
+  border: 2px solid #00ff00;
+  /* Add glow to button focus state - inside and outside border */
+  box-shadow: 
+    0 0 15px rgba(0, 255, 0, 0.8),
+    inset 0 0 15px rgba(0, 255, 0, 0.3);
+  text-shadow: none; /* Remove glow from black text */
+}
+
+/* Nav menu specific styling - focus should be outline only for non-active items */
+.nav__link a:focus:not(.a__active) {
+  background: #800080;
+  color: #808080;
+  border: 2px solid transparent;
+  box-sizing: border-box;
+}
+
+.night .nav__link a:focus:not(.a__active) {
+  background: #00ff00;
+  color: #000000;
+  border: 2px solid transparent;
+  box-sizing: border-box;
+  /* Add glow to nav button focus state - inside and outside border */
+  box-shadow: 
+    0 0 15px rgba(0, 255, 0, 0.8),
+    inset 0 0 15px rgba(0, 255, 0, 0.3);
+  text-shadow: none; /* Remove glow from black text */
+}
+
+
+
+/* Theme toggle specific press effect */
+#night__btn {
+  transition: all 0.15s ease;
+}
+
+/* Theme toggle hover effects - color highlight only */
+#night__btn:hover {
+  background: #800080;
+  color: #808080;
+  border: 2px solid #800080;
+}
+
+#night__btn:hover .toggle-indicator {
+  background: #800080; /* Box becomes filled on hover */
+  border: 2px solid #808080; /* Border becomes grey */
+}
+
+#night__btn:hover .toggle-indicator::before {
+  color: #808080; /* Dot becomes grey */
+}
+
+.night #night__btn:hover {
+  background: #00ff00;
+  color: #000000;
+  border: 2px solid #00ff00;
+  /* Add glow to theme toggle hover - inside and outside border */
+  box-shadow: 
+    0 0 15px rgba(0, 255, 0, 0.8),
+    inset 0 0 15px rgba(0, 255, 0, 0.3);
+  text-shadow: none; /* Remove glow from black text */
+}
+
+.night #night__btn:hover .toggle-indicator {
+  background: #00ff00; /* Box becomes filled green on hover */
+  border: 2px solid #000000; /* Border becomes black */
+}
+
+.night #night__btn:hover .toggle-indicator::before {
+  color: #000000; /* Dot becomes black */
+}
+
+/* Theme toggle indicator stays in normal position */
+
 
 .table__links:visited,
 .table__links:visited:hover {
-  color: #7245dc;
+  color: #5d1a6b;
+  opacity: 1;
 }
 
 .night .table__links:visited,
 .night .table__links:visited:hover {
-  color: #7245dc;
+  color: #00cc00;
+  opacity: 1;
+}
+
+
+.footer {
+  display: block;
+  width: 100%;
+  font-weight: 600;
+  margin-top: 56px;
+  font-size: 0.9em;
+  letter-spacing: 0px;
+  border-top: 2px dashed #800080;
+  padding-top: 28px;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.night .footer {
+  border-top: 2px dashed #00ff00;
+  position: relative;
+}
+
+.night .footer::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: rgba(0, 255, 0, 0.1);
+  box-shadow: 
+    0 -2px 15px rgba(0, 255, 0, 0.5),
+    0 2px 15px rgba(0, 255, 0, 0.3);
+  pointer-events: none;
+}
+
+.shortcuts-help {
+  font-size: 0.8em;
+  opacity: 0.7;
+  font-weight: 400;
 }
 
 .social__links {
   display: none;
-  transition: all 200ms ease;
-  -webkit-transition: all 200ms;
-}
-
-.footer {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  align-items: center;
-  justify-content: center;
-  font-weight: normal;
-}
-
-#bookmarks {
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto;
+  transition: none;
 }
 
 .bookmarks {
   display: none;
-  transition: all 200ms ease;
-  -webkit-transition: all 200ms;
+  transition: none;
 }
 
+
 .table {
-  display: table;
+  display: block;
   width: 100%;
-  border-collapse: collapse;
-  margin-top: 2rem;
   border: none;
+  margin: 0;
+  padding: 0;
 }
 
 .table-row {
-  display: table-row;
+  display: block;
+  margin-bottom: 0.5rem;
+  border: 2px solid #800080;
+  padding: 0.5rem;
+  background: transparent;
+  overflow: hidden;
+}
+
+.night .table-row {
+  border: 2px solid #00ff00;
+  /* Night theme list item glow - inside and outside */
+  box-shadow: 
+    0 0 15px rgba(0, 255, 0, 0.5),
+    inset 0 0 15px rgba(0, 255, 0, 0.3);
 }
 
 .table-cell {
-  display: table-cell;
-  padding: 0.5rem 1rem;
+  display: block;
+  padding: 0;
   border: none;
+  text-align: left;
+  font-weight: 600;
+  letter-spacing: 0px;
+  overflow: hidden;
+  word-wrap: break-word;
+  word-break: break-word;
+  hyphens: auto;
 }
 
-@media screen and (max-width: 960px) {
+/* HD Screen Optimization - 1920px and above */
+/* Mobile and tablet responsive */
+@media screen and (max-width: 700px) {
+  body {
+    padding: 10px;
+  }
+  
+  .container {
+    width: 100%;
+    max-width: 100%;
+  }
+  
+  .nav__link--list {
+    gap: 0.5rem;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .nav__link--list .nav__link:last-child {
+    margin-left: 0;
+    margin-top: 1rem;
+    order: 4;
+  }
+  
+  nav, #socials, #bookmarks, .footer {
+    text-align: center;
+  }
+  
+  .table-cell, .table-row {
+    text-align: center;
+  }
+  
+  .navigation-help {
+    display: none;
+  }
+}
+
+/* Very small mobile - prevent non-ASCII scaling */
+@media screen and (max-width: 390px) {
   * {
-    max-width: 960px;
+    font-size: inherit;
+  }
+  
+  body {
+    font-size: 16px;
+  }
+  
+  .container, nav, #socials, #bookmarks, .footer, .table, .table-row {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 100% !important;
   }
 }

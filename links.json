@@ -1,7 +1,7 @@
 {
    "socials":[
       {
-         "name":"Email",
+         "name":"✉ Email",
          "url":"mailto:info@yxssxn.xyz"
       },
       {
@@ -15,22 +15,22 @@
       {
          "name":"Opensea",
          "url":"https://opensea.io/yxssxn"
+      },
+      {
+         "name":"Spotify",
+         "url":"https://open.spotify.com/user/1230961551"
+      },
+      {
+         "name":"Instagram",
+         "url":"https://www.instagram.com/yxssxn"
+      },
+      {
+         "name":"Tumblr",
+         "url":"https://yxssxn.tumblr.com/"
       }
 
    ],
    "bookmarks":[
-     {
-        "name":"ΞTHTECTIVE",
-        "url":"https://ethtective.com/"
-     },
-      {
-         "name":"1800LASAGNE",
-         "url":"https://www.1800lasagne.com.au/"
-      },
-      {
-         "name":"NODATA",
-         "url":"http://nodata.tv/"
-      },
       {
          "name":"50 50",
          "url":"http://oliverlaric.com/5050.htm"

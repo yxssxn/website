@@ -3,18 +3,32 @@
 
 <head>
   <title>yxssxn.xyz</title>
-  <meta name="description" content="Yassin Ghomari, digital creative producer based in Sydney, Australia. ">
+  <meta name="description" content="Yassin Ghomari, producer and project manager from Sydney, Australia.">
   <meta name="keywords" content="yxssxn, YG, Yassin, Ghomari, Yassin Ghomari">
   <meta name="author" content="Yassin Ghomari">
   <meta charset="UTF-8">
   <meta name='viewport' content='width=device-width'>
   <link rel="stylesheet" href="style.css">
   <link rel="shortcut icon" type="image/png" href="https://yxssxn.xyz/img/favicon.png" />
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-JL0T6YY209"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-JL0T6YY209');
+  </script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="app.js" defer></script>
 </head>
 
 <body onload="setTheme()">
+  <!-- Full-screen loading overlay -->
+  <div id="loading-screen">
+    <div id="loading-text"></div>
+  </div>
+  
   <div class="container">
     <header>
       <h1 id="ascii-art">
@@ -24,34 +38,60 @@
       <nav>
         <ul class="nav__link--list">
           <li class="nav__link">
-            <a id="links" href="#" onclick="toggleSocials()">Links</a>
+            <a id="about" href="#" onclick="toggleAbout(); return false;" tabindex="1"><span class="nav-indicator"></span>About</a>
           </li>
           <li class="nav__link">
-            <a id="bookmark" href="#" onclick="toggleBookMarks()">Bookmarks</a>
+            <a id="links" href="#" onclick="toggleSocials(); return false;" tabindex="2"><span class="nav-indicator"></span>Contact</a>
           </li>
           <li class="nav__link">
-            <a href="#" onclick="mode()" id="night__btn">Dark</a>
+            <a id="bookmark" href="#" onclick="toggleBookMarks(); return false;" tabindex="3"><span class="nav-indicator"></span>Bookmarks</a>
+          </li>
+          <li class="nav__link">
+            <a href="#" onclick="mode(); return false;" id="night__btn" tabindex="4"><span class="toggle-indicator">●</span> Dark</a>
           </li>
         </ul>
       </nav>
     </div>
+    <section id="about-section" class="about">
+      <div id="about-content" class="about-text">
+        <p>yxssxn.xyz is the website of <a href="http://www.linkedin.com/in/yassinghomari/" target="_blank" class="about-link">Yassin Ghomari</a>, a producer and project manager from Sydney, Australia specialising in creative digital projects.</p>
+        <br>
+        <p>You can <a href="#" onclick="toggleSocials(); return false;" class="about-link">CONTACT</a> Yassin directly or check out his curated <a href="#" onclick="toggleBookMarks(); return false;" class="about-link">BOOKMARKS</a> from around the web.</p>
+        <br>
+        <p class="navigation-help">Navigate using the ↑ ↓ ← → keys and the ↵ button.<br>Press K for a list of <a href="#" onclick="showKeyboardShortcuts(); return false;" class="about-link"><strong>KEYBOARD SHORTCUTS</strong></a>, or ⎋ to hide sections.</p>
+      </div>
+    </section>
     <section id="socials" class="social__links">
       <div id="socialsTable" class="table"></div>
     </section>
     <section id="bookmarks" class="bookmarks">
       <div id="bookmarksTable" class="table"></div>
     </section>
+    <section id="shortcuts" class="shortcuts">
+      <div id="shortcuts-content" class="shortcuts-text">
+        <p><strong>KEYBOARD SHORTCUTS:</strong></p>
+        <br>
+        <p>A = About</p>
+        <p>C = Contact</p>
+        <p>B = Bookmarks</p>
+        <p>D = Dark Mode</p>
+        <p>L = Lite Mode</p>
+        <p>K = Shortcuts</p>
+        <p>⎋ = Hide sections</p>
+        <p>↑ ↓ ← → = Navigate</p>
+        <p>↵ = Select</p>
+      </div>
+    </section>
     <br>
     <br>
     <footer class="footer">
       <p>
-        <a href="mailto:info@yxssxn.xyz">info@yxssxn.xyz</a>
+        <a href="mailto:info@yxssxn.xyz"><span class="email-icon">✉</span> info@yxssxn.xyz</a>
       </p>
       <br>
       <p>
         MCMLXXXIV
       </p>
-      <div id="clock"></div>
     </footer>
     <br>
     <br>
